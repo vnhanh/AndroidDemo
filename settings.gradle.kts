@@ -21,4 +21,7 @@ dependencyResolutionManagement {
 
 rootProject.name = "Android Demo"
 include(":app")
- 
+include(":common")
+include(":data:calendar")
+include(":feature:calendar")
+include(":network")
