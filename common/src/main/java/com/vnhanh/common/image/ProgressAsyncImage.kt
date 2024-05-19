@@ -12,7 +12,7 @@ import androidx.compose.ui.layout.ContentScale
 import coil.compose.AsyncImage
 
 
-enum class ImageLoadingEnumState {
+enum class ImageLoadingState {
     IDLE, LOADING, SUCCESS, FAILURE
 }
 
@@ -23,10 +23,10 @@ fun ProgressAsyncImage(
     data: Any,
     contentScale: ContentScale = ContentScale.Fit,
     contentDescription: String,
-    overlayComposable: @Composable (modifier: Modifier, isLoadingProvider: () -> ImageLoadingEnumState) -> Unit,
+    overlayComposable: @Composable (modifier: Modifier, isLoadingProvider: () -> ImageLoadingState) -> Unit,
 ) {
     var loadState by remember {
-        mutableStateOf(ImageLoadingEnumState.IDLE)
+        mutableStateOf(ImageLoadingState.IDLE)
     }
 
     Box(modifier = modifier) {
@@ -37,13 +37,13 @@ fun ProgressAsyncImage(
             contentScale = contentScale,
             contentDescription = contentDescription,
             onLoading = {
-                loadState = ImageLoadingEnumState.LOADING
+                loadState = ImageLoadingState.LOADING
             },
             onSuccess = {
-                loadState = ImageLoadingEnumState.SUCCESS
+                loadState = ImageLoadingState.SUCCESS
             },
             onError = {
-                loadState = ImageLoadingEnumState.FAILURE
+                loadState = ImageLoadingState.FAILURE
             },
         )
         overlayComposable(

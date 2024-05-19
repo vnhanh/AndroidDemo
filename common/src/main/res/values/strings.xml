@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--Load Failed And Reload-->
+    <string name="error_load_failed_title">Loaded Failed</string>
+    <string name="error_load_failed_message">Please confirm your network connection and try again.</string>
+    <string name="reload">Reload</string>
+    <string name="no_data_to_display">No data to display</string>
+
+</resources>

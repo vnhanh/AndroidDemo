@@ -33,7 +33,7 @@ import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import com.vnhanh.common.theme.AppTypography.fontSize13LineHeight18Medium
+import com.vnhanh.common.theme.typography.appTypography
 
 /**
  * @param onKeyBoardAction: will replace for [onKeyBoardNextAction] and [onKeyBoardDoneAction]
@@ -62,8 +62,8 @@ fun AppTextField(
     unFocusColor: Color = MaterialTheme.colorScheme.onSurface,
     cursorColor: Color = Color.Black,
     textColor: Color = Color.Black,
-    textStyle: TextStyle = fontSize13LineHeight18Medium,
-    textAlign: TextAlign? = null,
+    textStyle: TextStyle = MaterialTheme.appTypography.bodyMedium,
+    textAlign: TextAlign = TextAlign.Start,
     @IntRange(from = 1) maxLines: Int = 1,
     headingComposable: (@Composable () -> Unit)? = null,
     trailingComposable: (@Composable () -> Unit)? = null,
