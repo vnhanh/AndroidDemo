@@ -1,7 +1,7 @@
 [versions]
 agp = "8.4.0"
-kotlin = "1.9.23"
-ksp = "1.9.23-1.0.20"
+kotlin = "1.9.24"
+ksp = "1.9.24-1.0.20"
 coreKtx = "1.13.1"
 junit = "4.13.2"
 junitVersion = "1.1.5"
@@ -14,6 +14,9 @@ appcompat = "1.6.1"
 material = "1.12.0"
 room = "2.6.1"
 coil = "2.6.0"
+glide = "4.15.1"
+exoplayer = "2.19.1"
+timber = "5.0.1"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -41,6 +44,9 @@ coil = { group = "io.coil-kt", name = "coil-compose", version.ref = "coil" }
 room = { group = "androidx.room", name = "room-runtime", version.ref = "room"}
 room-ktx = { group = "androidx.room", name = "room-ktx", version.ref = "room"}
 room-annotation-compiler = { group = "androidx.room", name = "room-compiler", version.ref = "room"}
+glide = { group = "com.github.bumptech.glide", name = "glide", version.ref = "glide"}
+exoplayer = { group = "com.google.android.exoplayere", name = "exoplayer", version.ref = "exoplayer"}
+timber = { group = "com.jakewharton.timber", name = "timber", version.ref = "timber" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

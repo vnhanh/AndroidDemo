@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="AppDropDown">
+        <attr name="items" format="reference" />
+        <attr name="contentLayout" format="reference" />
+        <attr name="dropDownItemLayout" format="reference" />
+        <attr name="popupBackgroundDrawable" format="reference" />
+        <attr name="dropDownIcon" format="reference" />
+        <!-- define icon size, tint color, padding, margin...-->
+        <attr name="iconStyle" format="reference" />
+        <!-- define content text font family, text size, color, letter spacing...-->
+        <attr name="textStyle" format="reference" />
+    </declare-styleable>
+</resources>
