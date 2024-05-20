@@ -24,19 +24,25 @@ android {
             )
         }
     }
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_19
         targetCompatibility = JavaVersion.VERSION_19
     }
+
     kotlinOptions {
         jvmTarget = "19"
     }
 }
 
 dependencies {
-    implementation(libs.androidx.core.ktx)
-    implementation(libs.androidx.appcompat)
-    implementation(libs.material)
+    implementation(project(":common:data"))
+
+    api(libs.retrofit)
+    api(libs.retrofit.converter.gson)
+    api(libs.okhttp3.logging.interceptor)
+
+    api(libs.annotation)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
