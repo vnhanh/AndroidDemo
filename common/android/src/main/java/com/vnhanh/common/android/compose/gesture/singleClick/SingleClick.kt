@@ -1,4 +1,4 @@
-package com.vnhanh.common.compose.modifier.singleClick
+package com.vnhanh.common.android.compose.gesture.singleClick
 
 import androidx.compose.foundation.Indication
 import androidx.compose.foundation.LocalIndication
@@ -8,7 +8,8 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.composed
 import androidx.compose.ui.semantics.Role
-import com.vnhanh.common.Constant.THRESHOLD_TIME_DEBOUNCE_CLICK_MILLISECOND
+import com.vnhanh.common.android.CommonConstant.THRESHOLD_TIME_DEBOUNCE_CLICK_MILLISECOND
+import com.vnhanh.common.compose.modifier.singleClick.NoRippleInteractionSource
 
 fun Modifier.singleClick(
     enabled: Boolean = true,

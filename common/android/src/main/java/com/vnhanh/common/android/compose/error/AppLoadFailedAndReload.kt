@@ -29,7 +29,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.vnhanh.common.R
-import com.vnhanh.common.compose.modifier.singleClick.singleClick
+import com.vnhanh.common.android.compose.gesture.singleClick.singleClick
 import com.vnhanh.common.compose.theme.color.customColorScheme
 import com.vnhanh.common.compose.theme.typography.appTypography
 
