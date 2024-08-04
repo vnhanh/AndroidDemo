@@ -2,7 +2,7 @@ package com.vnhanh.androiddemo.base
 
 import android.app.Application
 import com.vnhanh.androiddemo.BuildConfig
-import com.vnhanh.common.log.AppDebugTree
+import com.vnhanh.common.data.log.AppDebugTree
 import timber.log.Timber
 
 class DemoApplication : Application() {
