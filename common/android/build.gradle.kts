@@ -44,8 +44,8 @@ android {
 }
 
 dependencies {
-    implementation(project(":common:data"))
 
+    implementation(project(":common:dataHelper"))
     api(libs.androidx.core.ktx)
     api(libs.androidx.appcompat)
     api(libs.material)

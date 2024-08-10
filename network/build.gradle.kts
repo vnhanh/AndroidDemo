@@ -36,8 +36,8 @@ android {
 }
 
 dependencies {
-    implementation(project(":common:data"))
 
+    implementation(project(":common:dataHelper"))
     api(libs.retrofit)
     api(libs.retrofit.converter.gson)
     api(libs.okhttp3.logging.interceptor)
