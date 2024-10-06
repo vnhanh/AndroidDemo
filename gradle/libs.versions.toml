@@ -24,9 +24,8 @@ billing = "7.1.1"
 kotlin-serialization = "1.7.1"
 datastore = "1.1.1"
 navigation-compose = "2.8.2"
-hiltVersion = '2.49'
-hiltNavCompose = '1.2.0'
-hiltAndroidCompiler = '2.49'
+hilt-version = '2.49'
+hilt-androidx = '1.2.0'
 hiltNavigation = '1.2.0'
 javax-inject = "1.7.2"
 coroutine = "1.7.2"
@@ -73,10 +72,10 @@ billing = { group = "com.android.billingclient", name = "billing", version.ref =
 billing-ktx = { group = "com.android.billingclient", name = "billing-ktx", version.ref = "billing"}
 datastore = { group = "androidx.datastore", name = "datastore-preferences", version.ref = "datastore" }
 navigation-compose = { group = "androidx.navigation", name = "navigation-compose", version.ref = "navigation-compose" }
-hilt-navigation-compose = { group = "androidx.hilt", name = "hilt-navigation-compose", version.ref = "hiltNavCompose" }
-hilt-navigation-fragment = { group = "androidx.hilt", name = "hilt-navigation-fragment", version.ref = "hiltNavigation" }
-hilt-android = { group = "com.google.dagger", name = "hilt-android", version.ref = "hiltVersion" }
-hilt-android-compiler = { group = "com.google.dagger", name = "hilt-android-compiler", version.ref = "hiltAndroidCompiler" }
+hilt-android = { group = "com.google.dagger", name = "hilt-android", version.ref = "hilt-version" }
+hilt-android-compiler = { group = "com.google.dagger", name = "hilt-android-compiler", version.ref = "hilt-version" }
+hilt-navigation-compose = { group = "androidx.hilt", name = "hilt-navigation-compose", version.ref = "hilt-androidx" }
+hilt-navigation-fragment = { group = "androidx.hilt", name = "hilt-navigation-fragment", version.ref = "hilt-androidx" }
 javax-inject = { group = "javax.inject", name = "javax.inject", version.ref = "javax-inject" }
 kotlinx-coroutines-core = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-core", version.ref = "coroutine" }
 androidx-constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayout", version.ref = "constraintlayout" }
@@ -89,3 +88,6 @@ jetbrains-kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = 
 android-library = { id = "com.android.library", version.ref = "agp" }
 ksp = { id = "com.google.devtools.ksp", version.ref = "ksp"}
 kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin"}
+kotlin-kapt = { id = "org.jetbrains.kotlin.kapt", version.ref = "kotlin" }
+compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
+hilt = { id = "com.google.dagger.hilt.android", version.ref = "hilt-version" }
