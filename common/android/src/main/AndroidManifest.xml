@@ -6,7 +6,7 @@
         android:allowBackup="true"
         tools:targetApi="31">
         <activity
-            android:name=".android.ui.login.LoginActivity"
+            android:name="com.vnhanh.demo.authentication.ui.LoginActivity"
             android:exported="false"
             android:label="@string/title_activity_login" />
     </application>

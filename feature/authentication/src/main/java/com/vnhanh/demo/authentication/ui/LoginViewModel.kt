@@ -1,18 +1,17 @@
-package com.vnhanh.common.android.ui.login
+package com.vnhanh.demo.authentication.ui
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import android.util.Patterns
 import com.vnhanh.common.android.data.LoginRepository
-import com.vnhanh.common.android.data.Result
 
 import com.vnhanh.common.android.R
 
 class LoginViewModel(private val loginRepository: LoginRepository) : ViewModel() {
 
-    private val _loginForm = MutableLiveData<LoginFormState>()
-    val loginFormState: LiveData<LoginFormState> = _loginForm
+    private val _loginForm = MutableLiveData<com.vnhanh.demo.authentication.ui.LoginViewState>()
+    val loginFormState: LiveData<com.vnhanh.demo.authentication.ui.LoginViewState> = _loginForm
 
     private val _loginResult = MutableLiveData<LoginResult>()
     val loginResult: LiveData<LoginResult> = _loginResult
@@ -31,11 +30,13 @@ class LoginViewModel(private val loginRepository: LoginRepository) : ViewModel()
 
     fun loginDataChanged(username: String, password: String) {
         if (!isUserNameValid(username)) {
-            _loginForm.value = LoginFormState(usernameError = R.string.invalid_username)
+            _loginForm.value =
+                com.vnhanh.demo.authentication.ui.LoginViewState(usernameError = R.string.invalid_username)
         } else if (!isPasswordValid(password)) {
-            _loginForm.value = LoginFormState(passwordError = R.string.invalid_password)
+            _loginForm.value =
+                com.vnhanh.demo.authentication.ui.LoginViewState(passwordError = R.string.invalid_password)
         } else {
-            _loginForm.value = LoginFormState(isDataValid = true)
+            _loginForm.value = com.vnhanh.demo.authentication.ui.LoginViewState(isDataValid = true)
         }
     }
 
