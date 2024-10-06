@@ -1,0 +1,4 @@
+<resources>
+
+    <style name="Theme.AndroidDemo" parent="Theme.MaterialComponents.Light" />
+</resources>

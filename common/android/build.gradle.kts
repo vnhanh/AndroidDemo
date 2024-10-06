@@ -32,6 +32,7 @@ android {
 
     buildFeatures {
         compose = true
+        viewBinding = true
     }
 
     kotlinOptions {
@@ -62,6 +63,12 @@ dependencies {
     api(libs.coil)
 
     api(libs.glide)
+    implementation(libs.androidx.appcompat)
+    implementation(libs.material)
+    implementation(libs.annotation)
+    implementation(libs.androidx.constraintlayout)
+    implementation(libs.androidx.lifecycle.livedata.ktx)
+    implementation(libs.androidx.lifecycle.viewmodel.ktx)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
