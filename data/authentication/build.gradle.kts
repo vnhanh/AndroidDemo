@@ -5,10 +5,10 @@ plugins {
 
 android {
     namespace = "com.vnhanh.authentication"
-    compileSdk = 34
+    compileSdk = AppBuild.COMPILE_SDK
 
     defaultConfig {
-        minSdk = 28
+        minSdk = AppBuild.MIN_SDK
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")

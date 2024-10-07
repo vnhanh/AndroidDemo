@@ -6,10 +6,10 @@ plugins {
 
 android {
     namespace = "com.vnhanh.network"
-    compileSdk = 34
+    compileSdk = AppBuild.COMPILE_SDK
 
     defaultConfig {
-        minSdk = 26
+        minSdk = AppBuild.MIN_SDK
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")
@@ -37,13 +37,13 @@ android {
 
 dependencies {
     implementation(project(":common:dataHelper"))
-    api(libs.retrofit)
-    api(libs.retrofit.converter.gson)
-    api(libs.okhttp3.logging.interceptor)
-    api(libs.javax.inject)
-    api(libs.kotlinx.coroutines.core)
+    implementation(libs.retrofit)
+    implementation(libs.retrofit.converter.gson)
+    implementation(libs.okhttp3.logging.interceptor)
+    implementation(libs.javax.inject)
+    implementation(libs.kotlinx.coroutines.core)
 
-    api(libs.annotation)
+    implementation(libs.annotation)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)

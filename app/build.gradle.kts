@@ -7,12 +7,12 @@ plugins {
 
 android {
     namespace = "com.vnhanh.androiddemo"
-    compileSdk = 35
+    compileSdk = AppBuild.COMPILE_SDK
 
     defaultConfig {
         applicationId = "com.vnhanh.androiddemo"
-        minSdk = 28
-        targetSdk = 35
+        minSdk = AppBuild.MIN_SDK
+        targetSdk = AppBuild.TARGET_SDK
         versionCode = 1
         versionName = "1.0"
 

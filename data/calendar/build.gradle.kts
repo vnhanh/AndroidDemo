@@ -6,10 +6,10 @@ plugins {
 
 android {
     namespace = "com.vnhanh.data.calendar"
-    compileSdk = 34
+    compileSdk = AppBuild.COMPILE_SDK
 
     defaultConfig {
-        minSdk = 26
+        minSdk = AppBuild.MIN_SDK
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")
