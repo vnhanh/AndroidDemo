@@ -57,7 +57,7 @@ dependencies {
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
     implementation(libs.material3.window.size)
-    implementation(libs.androidx.compose.foundation)
+    implementation(libs.compose.foundation)
     implementation(libs.androidx.compose.runtime)
     implementation(libs.coil.compose)
 
