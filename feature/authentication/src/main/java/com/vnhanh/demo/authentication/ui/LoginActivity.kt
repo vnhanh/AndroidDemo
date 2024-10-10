@@ -14,6 +14,9 @@ import android.widget.EditText
 import android.widget.Toast
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.platform.ComposeView
+import androidx.compose.ui.platform.ViewCompositionStrategy
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
 
@@ -21,29 +24,23 @@ class LoginActivity : AppCompatActivity() {
 
     private val loginViewModel: LoginViewModel by viewModels()
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        setContent {
+        ComposeView(this).apply {
+            setContent {
+                setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
+                LoginScreen(
 
+                )
+            }
         }
     }
 
-//    private fun updateUiWithUser(model: LoggedInUserView) {
-//        val welcome = getString(R.string.welcome)
-//        val displayName = model.displayName
-//        // TODO : initiate successful logged in experience
-//        Toast.makeText(
-//            applicationContext,
-//            "$welcome $displayName",
-//            Toast.LENGTH_LONG
-//        ).show()
-//    }
-//
-//    private fun showLoginFailed(@StringRes errorString: Int) {
-//        Toast.makeText(applicationContext, errorString, Toast.LENGTH_SHORT).show()
-//    }
+    @Composable
+    private fun LoginScreen() {
+
+    }
 }
 
 /**

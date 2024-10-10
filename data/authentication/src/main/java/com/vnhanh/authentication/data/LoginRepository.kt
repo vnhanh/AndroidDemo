@@ -1,6 +1,7 @@
-package com.vnhanh.common.android.data
+package com.vnhanh.authentication.data
 
-import com.vnhanh.common.android.data.model.LoggedInUser
+import com.vnhanh.authentication.model.User
+
 
 /**
  * Class that requests authentication and user information from the remote data source and
@@ -10,7 +11,7 @@ import com.vnhanh.common.android.data.model.LoggedInUser
 class LoginRepository(val dataSource: LoginDataSource) {
 
     // in-memory cache of the loggedInUser object
-    var user: LoggedInUser? = null
+    var user: User? = null
         private set
 
     val isLoggedIn: Boolean
@@ -27,7 +28,7 @@ class LoginRepository(val dataSource: LoginDataSource) {
         dataSource.logout()
     }
 
-    fun login(username: String, password: String): Result<LoggedInUser> {
+    fun login(username: String, password: String): Result<User> {
         // handle login
         val result = dataSource.login(username, password)
 

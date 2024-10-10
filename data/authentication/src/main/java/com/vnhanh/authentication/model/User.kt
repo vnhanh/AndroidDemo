@@ -1,4 +1,4 @@
-package com.vnhanh.authentication
+package com.vnhanh.authentication.model
 
 data class User(
     val userId: String,

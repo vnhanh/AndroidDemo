@@ -50,6 +50,9 @@ android {
 }
 
 dependencies {
+    // dependent modules
+    implementation(project(":data:authentication"))
+
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)

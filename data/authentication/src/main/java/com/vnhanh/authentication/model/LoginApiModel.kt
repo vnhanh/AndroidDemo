@@ -1,4 +1,4 @@
-package com.vnhanh.authentication
+package com.vnhanh.authentication.model
 
 import com.google.gson.annotations.SerializedName
 import com.vnhanh.core.network.BaseRequest

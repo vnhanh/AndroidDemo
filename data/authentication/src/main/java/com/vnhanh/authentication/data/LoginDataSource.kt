@@ -1,4 +1,4 @@
-package com.vnhanh.common.android.data
+package com.vnhanh.authentication.data
 
 import com.vnhanh.common.android.data.model.LoggedInUser
 import java.io.IOException
