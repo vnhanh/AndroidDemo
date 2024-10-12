@@ -1,4 +1,4 @@
-package com.vnhanh.core.network
+package com.vnhanh.network.model
 
 import com.google.gson.annotations.SerializedName
 

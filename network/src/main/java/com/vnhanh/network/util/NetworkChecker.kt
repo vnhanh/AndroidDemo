@@ -1,4 +1,4 @@
-package com.vnhanh.core.network
+package com.vnhanh.network.util
 
 import android.content.Context
 import android.net.ConnectivityManager

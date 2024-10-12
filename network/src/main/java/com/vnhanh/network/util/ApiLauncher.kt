@@ -1,125 +1,109 @@
 package com.vnhanh.network.util
 
-import com.vnhanh.common.data.log.printDebugStackTrace
 import com.vnhanh.network.common.ApiConstant
-import com.vnhanh.network.model.ApiError
+import com.vnhanh.network.model.ApiErrorType
+import com.vnhanh.network.model.ApiState
 import com.vnhanh.network.model.BaseResponse
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.onStart
 import retrofit2.Response
+import javax.inject.Inject
 import kotlin.coroutines.cancellation.CancellationException
-
-interface IApiLauncher {
-    fun<T> launch(
-        apiCall: suspend () -> Response<BaseResponse<T>>,
-        tag: String? = null,
-    ) : Flow<ApiResult>
-}
 
 interface IApiLogger {
     fun log(throwable: Throwable, tag: String?)
 }
 
-enum class ResponseCode {
-    BODY_NULL,
-    UNMATCHED,
+interface IApiLauncher {
+    fun<T> launch(
+        apiCall: suspend () -> Response<BaseResponse<T>>,
+        tag: String? = null,
+    ) : Flow<ApiState<T>>
 }
 
-sealed class ApiResult {
-    data class Success<T>(val data: T) : ApiResult()
-
-    data class Failure(
-        val responseCode: Int = ApiConstant.CODE_ERROR_UNKNOWN,
-        val errors: ApiError? = null,
-        val message: String? = null,
-    ) : ApiResult()
-
-    data class Unauthorized(val message: String?) : ApiResult()
-
-    data class ParseException(
-        val code: ResponseCode,
-        val message: String? = null,
-    ) : ApiResult()
-
-    data object UnknownHost : ApiResult()
-    data object Timeout : ApiResult()
-    data class UnknownError(val message: String? = null) : ApiResult()
-}
-
-class ApiLauncherImpl constructor(
+class ApiLauncherImpl @Inject constructor(
     private val logger: IApiLogger,
 ) : IApiLauncher {
     override fun <T> launch(
         apiCall: suspend () -> Response<BaseResponse<T>>,
         tag: String?,
-    ): Flow<ApiResult> = flow{
+    ): Flow<ApiState<T>> = flow {
         val response: Response<BaseResponse<T>> = apiCall()
 
         when {
             response.isSuccessful -> {
-                val parsedResult: ApiResult = parseDataBody(response)
-                emit(parsedResult)
+                val parsedState: ApiState<T> = parseDataBody(response)
+                emit(parsedState)
             }
 
             else -> {
-                val error = ApiResult.Failure(
-                    responseCode = response.code(),
+                val error = ApiState.Error(
+                    code = response.code(),
                     message = response.message(),
                 )
                 emit(error)
             }
         }
-    }.catch { e ->
-        if (e is CancellationException) return@catch
-        e.printDebugStackTrace()
-        logger.log(e, tag)
-        val error: ApiResult = handleException(e)
-        emit(error)
+    }
+    .onStart {
+        emit(ApiState.Loading)
+    }
+    .catch { e ->
+        if (e !is CancellationException) {
+            logger.log(e, tag)
+            val error: ApiState<T> = handleException(e)
+            emit(error)
+        }
     }
 
-    private fun handleException(e: Throwable) : ApiResult {
+    private fun<T> handleException(e: Throwable) : ApiState<T> {
+        logger.log(e, "API ERROR")
         return when (e) {
             is java.net.UnknownHostException -> {
-                ApiResult.UnknownHost
+                ApiState.Error(type = ApiErrorType.UNKNOWN_HOST)
             }
 
             is java.net.SocketTimeoutException -> {
-                ApiResult.Timeout
+                ApiState.Error(type = ApiErrorType.TIMEOUT)
             }
 
             is com.google.gson.JsonSyntaxException -> {
-                ApiResult.ParseException(code = ResponseCode.UNMATCHED, message = e.message)
+                ApiState.Error(type = ApiErrorType.PARSE)
             }
 
             else -> {
-                ApiResult.UnknownError(message = e.message)
+                ApiState.Error(type = ApiErrorType.UNKNOWN, message = e.message.orEmpty())
             }
         }
     }
 
     private fun <T> parseDataBody(
         response: Response<BaseResponse<T>>
-    ): ApiResult {
-        val apiResponse: BaseResponse<T> = response.body() ?: return ApiResult.ParseException(code = ResponseCode.BODY_NULL)
-        val apiCode = apiResponse.code ?: return ApiResult.ParseException(code = ResponseCode.BODY_NULL)
-        val apiMessage: String? = apiResponse.message
-        val apiErrors: ApiError? = apiResponse.errors
+    ): ApiState<T> {
+        val apiResponse: BaseResponse<T> = response.body() ?: return ApiState.Error(type = ApiErrorType.BODY_NULL)
+        val apiCode = apiResponse.code ?: return ApiState.Error(type = ApiErrorType.UNKNOWN)
+        val errors: Map<String, List<String>>? = apiResponse.errors
+        val successData = apiResponse.data
 
-        return when (apiCode) {
-            ApiConstant.CODE_SUCCESS -> {
-                ApiResult.Success(data = apiResponse.data)
+        return when {
+            apiCode == ApiConstant.CODE_SUCCESS && successData != null -> {
+                ApiState.Success(data = successData)
             }
 
-            ApiConstant.CODE_UNAUTHORIZED -> {
-                ApiResult.Unauthorized(message = apiMessage)
+            apiCode == ApiConstant.CODE_SUCCESS && successData == null -> {
+                ApiState.Error(type = ApiErrorType.PARSE)
+            }
+
+            apiCode == ApiConstant.CODE_UNAUTHORIZED -> {
+                ApiState.Error(type = ApiErrorType.UNAUTHORIZED)
             }
 
             else -> {
-                ApiResult.Failure(
-                    // used for some cases, i.e exceed limit
-                    errors = apiErrors,
-                    message = apiMessage,
+                ApiState.Error(
+                    message = apiResponse.message.orEmpty(),
+                    errors = errors,
                 )
             }
         }

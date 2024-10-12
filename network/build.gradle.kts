@@ -2,6 +2,9 @@ plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.jetbrains.kotlin.android)
     alias(libs.plugins.ksp)
+    alias(libs.plugins.kotlin.kapt)
+    alias(libs.plugins.hilt)
+    alias(libs.plugins.dagger.hilt)
 }
 
 android {
@@ -36,15 +39,22 @@ android {
 }
 
 dependencies {
-    implementation(project(":common:dataHelper"))
+    // Kotlin
+    implementation(libs.kotlinx.coroutines.core)
+
     implementation(libs.retrofit)
     implementation(libs.retrofit.converter.gson)
     implementation(libs.okhttp3.logging.interceptor)
-    implementation(libs.javax.inject)
-    implementation(libs.kotlinx.coroutines.core)
 
     implementation(libs.annotation)
+    implementation(libs.gson)
 
+    // Hilt
+    implementation(libs.hilt.android)
+    implementation(libs.androidx.foundation.android)
+    kapt(libs.hilt.android.compiler)
+
+    // Test
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)

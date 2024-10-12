@@ -1,7 +1,6 @@
 package com.vnhanh.network.httpLog
 
 import android.text.TextUtils
-import com.vnhanh.common.data.log.printDebugStackTrace
 import okhttp3.Request
 import okhttp3.RequestBody
 import okio.Buffer
@@ -10,6 +9,7 @@ import org.json.JSONException
 import org.json.JSONObject
 import java.io.IOException
 import java.io.UnsupportedEncodingException
+import java.math.BigDecimal
 import java.net.URLDecoder
 import java.nio.charset.StandardCharsets
 
@@ -85,7 +85,11 @@ internal object AppPrinter {
         )
     }
 
-    fun printJsonRequestDecode(builder: AppLoggingInterceptor.Builder, request: Request) {
+    fun printJsonRequestDecode(
+        builder: AppLoggingInterceptor.Builder,
+        request: Request,
+        logPrinter: ILogPrinter,
+    ) {
         val requestBody: String = getRequestBodyStr(bodyToString(request))
         val tag: String = builder.getTag(isRequest = true)
         builder.getLogger().log(
@@ -113,29 +117,31 @@ internal object AppPrinter {
         if (builder.getLevel() === ILogger.Level.BASIC || builder.getLevel() === ILogger.Level.BODY) {
             if (builder.isAllowCopy) {
                 logLinesDecodeForCopy(
-                    builder.type,
-                    tag,
-                    requestBody,
-                    builder.getLogger(),
-                    true,
-                    builder.isLogHackEnable
+                    type = builder.type,
+                    tag = tag,
+                    line = requestBody,
+                    logger = builder.getLogger(),
+                    withLineSize = true,
+                    useLogHack = builder.isLogHackEnable,
                 )
             } else {
                 logLinesDecode(
-                    builder.type,
-                    tag,
-                    requestBody.split(LINE_SEPARATOR.toRegex()).dropLastWhile { it.isEmpty() }
+                    type = builder.type,
+                    tag = tag,
+                    lines = requestBody.split(LINE_SEPARATOR.toRegex()).dropLastWhile { it.isEmpty() }
                         .toTypedArray(),
-                    builder.getLogger(),
-                    true,
-                    builder.isLogHackEnable)
+                    logger = builder.getLogger(),
+                    withLineSize = true,
+                    useLogHack = builder.isLogHackEnable,
+                    logPrinter = logPrinter,
+                )
             }
         }
         builder.getLogger().log(
-            builder.type,
-            tag,
-            "└───────────────────────────────────────────────────────────────────────────────────────",
-            builder.isLogHackEnable
+            typeLog = builder.type,
+            tag = tag,
+            message = "└───────────────────────────────────────────────────────────────────────────────────────",
+            useLogHack = builder.isLogHackEnable,
         )
     }
 
@@ -434,7 +440,8 @@ internal object AppPrinter {
         lines: Array<String>,
         logger: ILogger,
         withLineSize: Boolean,
-        useLogHack: Boolean
+        useLogHack: Boolean,
+        logPrinter: ILogPrinter,
     ) {
         for (line: String in lines) {
             val lineLength: Int = line.length
@@ -447,7 +454,7 @@ internal object AppPrinter {
                         useLogHack = useLogHack
                     )
                 } catch (e: UnsupportedEncodingException) {
-                    e.printDebugStackTrace()
+                    logPrinter.print(e)
                 }
             } else {
                 val maxLongSize: Int = if (withLineSize) 110 else lineLength
@@ -486,7 +493,7 @@ internal object AppPrinter {
                     useLogHack = useLogHack
                 )
             } catch (e: UnsupportedEncodingException) {
-                e.printDebugStackTrace()
+
             }
         } else {
             val maxLongSize: Int = if (withLineSize) 110 else lineLength

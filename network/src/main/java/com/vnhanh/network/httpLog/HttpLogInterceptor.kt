@@ -1,7 +1,6 @@
 package com.vnhanh.network.httpLog
 
 import android.text.TextUtils
-import com.vnhanh.common.data.log.printDebugStackTrace
 import okhttp3.HttpUrl
 import okhttp3.Interceptor
 import okhttp3.MediaType
@@ -23,12 +22,15 @@ internal interface IBufferListener {
     fun getJsonResponse(var1: Request?): String?
 }
 
-class AppLoggingInterceptor private constructor(private val builder: Builder) : Interceptor {
-    private var isDebug: Boolean
+interface ILogPrinter {
+    fun print(exception: Throwable)
+}
 
-    init {
-        isDebug = builder.isDebug
-    }
+class AppLoggingInterceptor private constructor(
+    private val builder: Builder,
+    private val logPrinter: ILogPrinter,
+) : Interceptor {
+    private var isDebug: Boolean = builder.isDebug
 
     override fun intercept(chain: Interceptor.Chain): Response {
         var request: Request = chain.request()
@@ -69,7 +71,11 @@ class AppLoggingInterceptor private constructor(private val builder: Builder) : 
             val executor: Executor? = builder.executor
 
             if (isFormUrlEncoded(rSubtype)) {
-                AppPrinter.printJsonRequestDecode(builder, request)
+                AppPrinter.printJsonRequestDecode(
+                    builder = builder,
+                    request = request,
+                    logPrinter = logPrinter,
+                )
             } else {
                 if (isNotFileRequest(rSubtype)) {
                     if (executor != null) {
@@ -98,7 +104,7 @@ class AppLoggingInterceptor private constructor(private val builder: Builder) : 
                 try {
                     TimeUnit.MILLISECONDS.sleep(builder.sleepMs)
                 } catch (var24: InterruptedException) {
-                    var24.printDebugStackTrace()
+                    logPrinter.print(var24)
                 }
 
                 Response.Builder()
@@ -243,10 +249,10 @@ class AppLoggingInterceptor private constructor(private val builder: Builder) : 
             return level
         }
 
-        fun setLevel(level: ILogger.Level): Builder {
-            this.level = level
-            return this
-        }
+//        fun setLevel(level: ILogger.Level): Builder {
+//            this.level = level
+//            return this
+//        }
 
         fun getTag(isRequest: Boolean): String {
             return if (isRequest) {
@@ -260,71 +266,67 @@ class AppLoggingInterceptor private constructor(private val builder: Builder) : 
             return logger
         }
 
-        fun addHeader(name: String?, value: String?): Builder {
-            headers[name] = value
-            return this
-        }
+//        fun addHeader(name: String?, value: String?): Builder {
+//            headers[name] = value
+//            return this
+//        }
+//
+//        fun addQueryParam(name: String?, value: String): Builder {
+//            httpUrl[name] = value
+//            return this
+//        }
+//
+//        fun tag(tag: String): Builder {
+//            TAG = tag
+//            return this
+//        }
+//
+//        fun request(tag: String?): Builder {
+//            requestTag = tag
+//            return this
+//        }
+//
+//        fun response(tag: String?): Builder {
+//            responseTag = tag
+//            return this
+//        }
+//
+//        fun loggable(isDebug: Boolean): Builder {
+//            this.isDebug = isDebug
+//            return this
+//        }
+//
+//        fun log(type: Int): Builder {
+//            this.type = type
+//            return this
+//        }
+//
+//        fun logger(logger: ILogger): Builder {
+//            this.logger = logger
+//            return this
+//        }
+//
+//        fun executor(executor: Executor?): Builder {
+//            this.executor = executor
+//            return this
+//        }
 
-        fun addQueryParam(name: String?, value: String): Builder {
-            httpUrl[name] = value
-            return this
-        }
-
-        fun tag(tag: String): Builder {
-            TAG = tag
-            return this
-        }
-
-        fun request(tag: String?): Builder {
-            requestTag = tag
-            return this
-        }
-
-        fun response(tag: String?): Builder {
-            responseTag = tag
-            return this
-        }
-
-        fun loggable(isDebug: Boolean): Builder {
-            this.isDebug = isDebug
-            return this
-        }
-
-        fun log(type: Int): Builder {
-            this.type = type
-            return this
-        }
-
-        fun logger(logger: ILogger): Builder {
-            this.logger = logger
-            return this
-        }
-
-        fun executor(executor: Executor?): Builder {
-            this.executor = executor
-            return this
-        }
-
-        fun enableMock(useMock: Boolean, sleep: Long, listener: IBufferListener?): Builder {
-            isMockEnabled = useMock
-            sleepMs = sleep
-            this.listener = listener
-            return this
-        }
-
-        fun enableAndroidStudioV3LogsHack(useHack: Boolean): Builder {
-            isLogHackEnable = useHack
-            return this
-        }
-
-        fun enableLogModeForCopy(isCopy: Boolean): Builder {
-            isAllowCopy = isCopy
-            return this
-        }
-
-        fun build(): AppLoggingInterceptor {
-            return AppLoggingInterceptor(this)
-        }
+//        fun enableMock(useMock: Boolean, sleep: Long, listener: IBufferListener?): Builder {
+//            isMockEnabled = useMock
+//            sleepMs = sleep
+//            this.listener = listener
+//            return this
+//        }
+//
+//        fun enableAndroidStudioV3LogsHack(useHack: Boolean): Builder {
+//            isLogHackEnable = useHack
+//            return this
+//        }
+//
+//        fun enableLogModeForCopy(isCopy: Boolean): Builder {
+//            isAllowCopy = isCopy
+//            return this
+//        }
 
         companion object {
             private var TAG = "LoggingI"
@@ -353,15 +355,15 @@ class AppLoggingInterceptor private constructor(private val builder: Builder) : 
         ): Runnable {
             return Runnable {
                 AppPrinter.printJsonResponse(
-                    builder,
-                    chainMs,
-                    isSuccessful,
-                    code,
-                    headers,
-                    bodyString,
-                    segments,
-                    message,
-                    responseUrl
+                    builder = builder,
+                    chainMs = chainMs,
+                    isSuccessful = isSuccessful,
+                    code = code,
+                    headers = headers,
+                    bodyString = bodyString,
+                    segments = segments,
+                    message = message,
+                    responseUrl = responseUrl
                 )
             }
         }
@@ -377,13 +379,13 @@ class AppLoggingInterceptor private constructor(private val builder: Builder) : 
         ): Runnable {
             return Runnable {
                 AppPrinter.printFileResponse(
-                    builder,
-                    chainMs,
-                    isSuccessful,
-                    code,
-                    headers,
-                    segments,
-                    message
+                    builder = builder,
+                    chainMs = chainMs,
+                    isSuccessful = isSuccessful,
+                    code = code,
+                    headers = headers,
+                    segments = segments,
+                    message = message
                 )
             }
         }
