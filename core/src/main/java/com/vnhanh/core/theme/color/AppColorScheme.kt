@@ -1,4 +1,4 @@
-package com.vnhanh.common.compose.theme.color
+package com.vnhanh.core.theme.color
 
 import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.lightColorScheme

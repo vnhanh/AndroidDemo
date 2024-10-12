@@ -1,4 +1,4 @@
-package com.vnhanh.common.compose.theme
+package com.vnhanh.core.theme
 
 import android.os.Build
 import androidx.compose.foundation.isSystemInDarkTheme
@@ -9,11 +9,11 @@ import androidx.compose.material3.dynamicLightColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.platform.LocalContext
-import com.vnhanh.common.compose.theme.color.DarkColorScheme
-import com.vnhanh.common.compose.theme.color.LightColorScheme
-import com.vnhanh.common.compose.theme.color.LocalCustomColorScheme
-import com.vnhanh.common.compose.theme.color.darkCustomColorScheme
-import com.vnhanh.common.compose.theme.color.lightCustomColorScheme
+import com.vnhanh.core.theme.color.DarkColorScheme
+import com.vnhanh.core.theme.color.LightColorScheme
+import com.vnhanh.core.theme.color.LocalCustomColorScheme
+import com.vnhanh.core.theme.color.darkCustomColorScheme
+import com.vnhanh.core.theme.color.lightCustomColorScheme
 import com.vnhanh.common.compose.theme.typography.AppTypography
 import com.vnhanh.common.compose.theme.typography.LocalAppTypography
 

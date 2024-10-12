@@ -1,4 +1,4 @@
-package com.vnhanh.common.compose.theme.color
+package com.vnhanh.core.theme.color
 
 import androidx.compose.ui.graphics.Color
 
