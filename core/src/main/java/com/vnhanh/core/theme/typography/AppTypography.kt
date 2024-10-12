@@ -1,10 +1,11 @@
-package com.vnhanh.common.compose.theme.typography
+package com.vnhanh.core.theme.typography
 
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.ReadOnlyComposable
 import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.text.TextStyle
+import com.vnhanh.common.compose.theme.typography.AppTypographyTokens
 
 /**
  * Refer:

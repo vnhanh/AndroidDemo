@@ -14,8 +14,8 @@ import com.vnhanh.core.theme.color.LightColorScheme
 import com.vnhanh.core.theme.color.LocalCustomColorScheme
 import com.vnhanh.core.theme.color.darkCustomColorScheme
 import com.vnhanh.core.theme.color.lightCustomColorScheme
-import com.vnhanh.common.compose.theme.typography.AppTypography
-import com.vnhanh.common.compose.theme.typography.LocalAppTypography
+import com.vnhanh.core.theme.typography.AppTypography
+import com.vnhanh.core.theme.typography.LocalAppTypography
 
 
 @Composable

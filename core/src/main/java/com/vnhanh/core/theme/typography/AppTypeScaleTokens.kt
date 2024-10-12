@@ -1,4 +1,4 @@
-package com.vnhanh.common.compose.theme.typography
+package com.vnhanh.core.theme.typography
 
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp

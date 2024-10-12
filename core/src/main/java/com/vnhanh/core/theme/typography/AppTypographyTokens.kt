@@ -1,6 +1,7 @@
 package com.vnhanh.common.compose.theme.typography
 
 import androidx.compose.ui.text.TextStyle
+import com.vnhanh.core.theme.typography.AppTypeScaleTokens
 
 /**
  * Refer:
