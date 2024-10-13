@@ -3,10 +3,10 @@ plugins {
     alias(libs.plugins.jetbrains.kotlin.android)
     alias(libs.plugins.kotlin.kapt)
     alias(libs.plugins.ksp)
-    alias(libs.plugins.kotlin.plugin.serialization)
+    alias(libs.plugins.kotlin.serialization)
     alias(libs.plugins.hilt)
     alias(libs.plugins.compose.compiler)
-    id("dagger.hilt.android.plugin")
+    alias(libs.plugins.dagger.hilt)
 }
 
 android {
@@ -51,6 +51,8 @@ android {
 
 dependencies {
     // dependent modules
+    implementation(project(":core"))
+    implementation(project(":network"))
     implementation(project(":data:authentication"))
 
     implementation(libs.androidx.core.ktx)
@@ -58,7 +60,6 @@ dependencies {
     implementation(libs.material)
 
     // Hilt
-    implementation(libs.hilt.android)
     implementation(libs.hilt.android)
     kapt(libs.hilt.android.compiler)
     implementation(libs.hilt.navigation.fragment)

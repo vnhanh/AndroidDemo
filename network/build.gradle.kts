@@ -42,6 +42,7 @@ dependencies {
     // Kotlin
     implementation(libs.kotlinx.coroutines.core)
 
+    // Retrofit
     implementation(libs.retrofit)
     implementation(libs.retrofit.converter.gson)
     implementation(libs.okhttp3.logging.interceptor)

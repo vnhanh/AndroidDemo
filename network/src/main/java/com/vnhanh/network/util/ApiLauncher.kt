@@ -17,7 +17,7 @@ interface IApiLogger {
 }
 
 interface IApiLauncher {
-    fun<T> launch(
+    operator fun<T> invoke(
         apiCall: suspend () -> Response<BaseResponse<T>>,
         tag: String? = null,
     ) : Flow<ApiState<T>>
@@ -26,7 +26,7 @@ interface IApiLauncher {
 class ApiLauncherImpl @Inject constructor(
     private val logger: IApiLogger,
 ) : IApiLauncher {
-    override fun <T> launch(
+    override operator fun<T> invoke(
         apiCall: suspend () -> Response<BaseResponse<T>>,
         tag: String?,
     ): Flow<ApiState<T>> = flow {

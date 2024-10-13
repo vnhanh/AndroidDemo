@@ -2,9 +2,9 @@ plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.jetbrains.kotlin.android)
     alias(libs.plugins.kotlin.kapt)
-    alias(libs.plugins.hilt)
     alias(libs.plugins.compose.compiler)
-    id("dagger.hilt.android.plugin")
+    alias(libs.plugins.hilt)
+    alias(libs.plugins.dagger.hilt)
 }
 
 android {
@@ -53,7 +53,6 @@ dependencies {
     implementation(libs.gson)
 
     // Hilt
-    implementation(libs.hilt.android)
     implementation(libs.hilt.android)
     implementation(libs.androidx.material3.android)
     implementation(libs.androidx.foundation.android)

@@ -1,10 +1,11 @@
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.jetbrains.kotlin.android)
+    alias(libs.plugins.kotlin.kapt)
 }
 
 android {
-    namespace = "com.vnhanh.authentication"
+    namespace = "com.vnhanh.data.authentication"
     compileSdk = AppBuild.COMPILE_SDK
 
     defaultConfig {
@@ -35,11 +36,22 @@ android {
 dependencies {
     // dependent modules
     implementation(project(":core"))
+    implementation(project(":network"))
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
     implementation(libs.gson)
+
+    // Retrofit
+    implementation(libs.retrofit)
+    implementation(libs.retrofit.converter.gson)
+    implementation(libs.okhttp3.logging.interceptor)
+
+    // Hilt
+    implementation(libs.hilt.android)
+    implementation(libs.androidx.foundation.android)
+    kapt(libs.hilt.android.compiler)
 
     // Test
     testImplementation(libs.junit)
