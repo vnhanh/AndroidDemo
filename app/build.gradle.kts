@@ -98,6 +98,13 @@ dependencies {
     implementation(libs.accompanist.pager.indicators)
     implementation(libs.compose.animation)
 
+    // Firebase
+    implementation(platform(libs.firebase.bom))
+    implementation(libs.firebase.messaging)
+    implementation(libs.firebase.crashlytics.ktx)
+    implementation(libs.firebase.analytics.ktx)
+
+    // Room
     implementation(libs.room)
     implementation(libs.room.ktx)
     ksp(libs.room.annotation.compiler)
