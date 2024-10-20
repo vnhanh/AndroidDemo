@@ -118,3 +118,4 @@ kotlin-kapt = { id = "org.jetbrains.kotlin.kapt", version.ref = "kotlin" }
 compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 hilt = { id = "com.google.dagger.hilt.android", version.ref = "hilt-version" }
 dagger-hilt = { id = "dagger.hilt.android.plugin" }
+kotlin-parcelize = { id = "org.jetbrains.kotlin.plugin.parcelize"}
