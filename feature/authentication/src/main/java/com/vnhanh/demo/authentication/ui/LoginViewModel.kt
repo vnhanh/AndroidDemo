@@ -1,42 +1,60 @@
 package com.vnhanh.demo.authentication.ui
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import android.util.Patterns
-import com.vnhanh.common.android.data.LoginRepository
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.vnhanh.authentication.domain.LoginUseCase
+import com.vnhanh.authentication.model.UserData
+import com.vnhanh.demo.authentication.domain.IAuthValidator
+import com.vnhanh.demo.authentication.model.AuthUiState
+import com.vnhanh.demo.authentication.model.TextFieldState
+import com.vnhanh.network.model.ApiState
+import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
+import javax.inject.Inject
+import kotlin.coroutines.cancellation.CancellationException
 
-import com.vnhanh.common.android.R
+@HiltViewModel
+class LoginViewModel @Inject constructor(
+    private val loginUseCase: LoginUseCase,
+    private val authValidator: IAuthValidator,
+) : ViewModel() {
+    private val _uiState = MutableStateFlow(AuthUiState())
+    val uiState = _uiState.asStateFlow()
 
-class LoginViewModel(private val loginRepository: LoginRepository) : ViewModel() {
+    fun login(email: String, password: String) {
+        viewModelScope.launch(Dispatchers.IO) {
+            loginUseCase.login(email = email, password = password)
+                .catch { e ->
+                    if (e !is CancellationException) {
+                        emit(ApiState.Error(message = e.message.orEmpty()))
+                    }
+                }
+                .collect { apiState: ApiState<UserData> ->
+                    when(apiState) {
+                        is ApiState.Loading -> {
+                            _uiState.value.loginUiState.updateEmailState(
+                                newState = TextFieldState.DISABLED
+                            )
+                            _uiState.value.loginUiState.updatePasswordState(
+                                newState = TextFieldState.DISABLED
+                            )
+                        }
 
-    private val _loginForm = MutableLiveData<com.vnhanh.demo.authentication.ui.LoginViewState>()
-    val loginFormState: LiveData<com.vnhanh.demo.authentication.ui.LoginViewState> = _loginForm
+                        is ApiState.Error -> {
 
-    private val _loginResult = MutableLiveData<LoginResult>()
-    val loginResult: LiveData<LoginResult> = _loginResult
+                        }
 
-    fun login(username: String, password: String) {
-        // can be launched in a separate asynchronous job
-        val result = loginRepository.login(username, password)
+                        is ApiState.Success -> {
 
-        if (result is Result.Success) {
-            _loginResult.value =
-                LoginResult(success = LoggedInUserView(displayName = result.data.displayName))
-        } else {
-            _loginResult.value = LoginResult(error = R.string.login_failed)
-        }
-    }
-
-    fun loginDataChanged(username: String, password: String) {
-        if (!isUserNameValid(username)) {
-            _loginForm.value =
-                com.vnhanh.demo.authentication.ui.LoginViewState(usernameError = R.string.invalid_username)
-        } else if (!isPasswordValid(password)) {
-            _loginForm.value =
-                com.vnhanh.demo.authentication.ui.LoginViewState(passwordError = R.string.invalid_password)
-        } else {
-            _loginForm.value = com.vnhanh.demo.authentication.ui.LoginViewState(isDataValid = true)
+                        }
+                    }
+                }
         }
     }
 

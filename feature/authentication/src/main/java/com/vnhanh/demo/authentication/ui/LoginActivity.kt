@@ -1,24 +1,18 @@
 package com.vnhanh.demo.authentication.ui
 
-import android.app.Activity
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
-import androidx.annotation.StringRes
-import androidx.appcompat.app.AppCompatActivity
 import android.text.Editable
 import android.text.TextWatcher
-import android.view.View
-import android.view.inputmethod.EditorInfo
 import android.widget.EditText
-import android.widget.Toast
-import androidx.activity.compose.setContent
 import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatActivity
+import androidx.compose.material.Text
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.platform.ViewCompositionStrategy
-import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.viewmodel.compose.viewModel
 
 class LoginActivity : AppCompatActivity() {
 
@@ -39,7 +33,11 @@ class LoginActivity : AppCompatActivity() {
 
     @Composable
     private fun LoginScreen() {
-
+        Text(
+            text = "Login",
+//            modifier = Modifier.shadow(),
+            style = MaterialTheme.typography.displayMedium,
+        )
     }
 }
 

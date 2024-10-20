@@ -1,11 +1,10 @@
 package com.vnhanh.authentication.model
 
 import com.google.gson.annotations.SerializedName
-import com.vnhanh.core.network.BaseRequest
+import com.vnhanh.network.model.BaseRequest
 
 
 data class LoginRequest(
-    @SerializedName("user_name") val userName: String? = null,
     @SerializedName("email") val email: String? = null,
     @SerializedName("password") val password: String,
     @SerializedName("user_device_key") val userDeviceKey: String,
@@ -24,6 +23,7 @@ data class LoginResponse(
     @SerializedName("address") val address: String? = null,
     @SerializedName("first_name") val firstName: String? = null,
     @SerializedName("last_name") val lastName: String? = null,
+    @SerializedName("phone_number") val phoneNumber: String? = null,
     @SerializedName("member") val member: Int? = null,
 )
 
