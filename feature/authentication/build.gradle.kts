@@ -54,6 +54,7 @@ dependencies {
     implementation(project(":core"))
     implementation(project(":network"))
     implementation(project(":data:authentication"))
+    implementation(project(":common:android"))
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
