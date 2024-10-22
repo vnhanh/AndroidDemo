@@ -1,4 +1,4 @@
-package com.vnhanh.common.compose.textfield
+package com.vnhanh.common.android.compose.textfield
 
 import androidx.annotation.IntRange
 import androidx.compose.foundation.interaction.MutableInteractionSource
@@ -33,7 +33,6 @@ import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import com.vnhanh.common.compose.theme.typography.appTypography
 
 /**
  * @param onKeyBoardAction: will replace for [onKeyBoardNextAction] and [onKeyBoardDoneAction]
@@ -53,16 +52,16 @@ fun AppTextField(
     shape: Shape = RoundedCornerShape(8.dp),
     paddingValues: PaddingValues = PaddingValues(vertical = 8.dp, horizontal = 16.dp),
     onValueChanged: (TextFieldValue) -> Unit,
-    keyboardType: KeyboardType = KeyboardType.Number,
+    keyboardType: KeyboardType = KeyboardType.Text,
     imeAction: ImeAction = ImeAction.Next,
     onKeyBoardNextAction: (KeyboardActionScope.() -> Unit)? = null,
     onKeyBoardDoneAction: (KeyboardActionScope.() -> Unit)? = null,
     onKeyBoardAction: KeyboardActions? = null,
-    focusColor: Color = Color.Black,
+    focusColor: Color = MaterialTheme.colorScheme.surface,
     unFocusColor: Color = MaterialTheme.colorScheme.onSurface,
-    cursorColor: Color = Color.Black,
-    textColor: Color = Color.Black,
-    textStyle: TextStyle = MaterialTheme.appTypography.bodyMedium,
+    cursorColor: Color = MaterialTheme.colorScheme.surface,
+    textColor: Color = MaterialTheme.colorScheme.surface,
+    textStyle: TextStyle = MaterialTheme.typography.bodyMedium,
     textAlign: TextAlign = TextAlign.Start,
     @IntRange(from = 1) maxLines: Int = 1,
     headingComposable: (@Composable () -> Unit)? = null,
