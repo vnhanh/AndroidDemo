@@ -1,6 +1,7 @@
 package com.vnhanh.demo.authentication.model
 
 import androidx.compose.ui.text.input.TextFieldValue
+import com.vnhanh.demo.authentication.R
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
@@ -16,9 +17,13 @@ data class LoginUiState(
     private val _passwordState: MutableStateFlow<TextFieldUiData> = MutableStateFlow(TextFieldUiData()),
     private val _keepEmailState: MutableStateFlow<Boolean> = MutableStateFlow(false),
     private val _showPasswordState: MutableStateFlow<Boolean> = MutableStateFlow(false),
+    private val _loginButtonState: MutableStateFlow<AuthButton> = MutableStateFlow(AuthButton()),
 ) {
     val emailState = _emailState.asStateFlow()
     val passwordState = _passwordState.asStateFlow()
+    val keepEmailState = _keepEmailState.asStateFlow()
+    val showPasswordState = _showPasswordState.asStateFlow()
+    val loginButtonState = _loginButtonState.asStateFlow()
 
     fun updateEmailState(
         newState: TextFieldState = this._emailState.value.uiState,
@@ -48,7 +53,8 @@ data class LoginUiState(
 }
 
 data class SignUpUiState(
-    private val _emailState: MutableStateFlow<TextFieldUiData> = MutableStateFlow(TextFieldUiData()),
+    private val _emailState: MutableStateFlow<TextFieldUiData> =
+        MutableStateFlow(TextFieldUiData(placeholderResId = R.string.email)),
     private val _passwordState: MutableStateFlow<TextFieldUiData> = MutableStateFlow(TextFieldUiData()),
     private val _showPasswordState: MutableStateFlow<Boolean> = MutableStateFlow(false),
     private val _confirmPasswordState: MutableStateFlow<TextFieldUiData> = MutableStateFlow(TextFieldUiData()),
@@ -67,6 +73,10 @@ enum class TextFieldState{
 data class TextFieldUiData(
     val uiState: TextFieldState = TextFieldState.ENABLED,
     val uiValue: TextFieldValue = TextFieldValue(),
+    val headIconResId: Int = R.drawable.ic_email,
+    val placeholderResId: Int = R.string.email,
+    val trailingResId: Int = 0,
+    val trailingDescResId: Int = 0,
     val enable: Boolean = true,
     val errorMsg: String = ""
 )
@@ -79,5 +89,5 @@ enum class AuthButtonState {
 
 data class AuthButton(
     val state: AuthButtonState = AuthButtonState.DISABLED,
-    val text: String = "",
+    val textResId: Int = R.string.login_btn,
 )

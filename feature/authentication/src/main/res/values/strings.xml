@@ -2,4 +2,6 @@
 <resources>
     <string name="email">Email</string>
     <string name="password">Password</string>
+    <string name="for_password_btn">Forgot password?</string>
+    <string name="login_btn">LOGIN</string>
 </resources>

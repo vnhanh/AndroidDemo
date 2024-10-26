@@ -1,18 +1,16 @@
 package com.vnhanh.demo.authentication.ui
 
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
-import android.widget.EditText
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.compose.material.Text
-import androidx.compose.material3.MaterialTheme
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.platform.ViewCompositionStrategy
+import com.vnhanh.demo.authentication.component.AuthScreenTopBar
+import com.vnhanh.demo.authentication.component.LoginForm
 
 class LoginActivity : AppCompatActivity() {
 
@@ -24,19 +22,30 @@ class LoginActivity : AppCompatActivity() {
         ComposeView(this).apply {
             setContent {
                 setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
-                LoginScreen(
-
-                )
+                LoginScreen()
             }
         }
     }
 
     @Composable
     private fun LoginScreen() {
-        Text(
-            text = "Login",
-//            modifier = Modifier.shadow(),
-            style = MaterialTheme.typography.displayMedium,
-        )
+        Column(modifier = Modifier.fillMaxSize()) {
+            AuthScreenTopBar()
+            LoginForm(
+                loginFormUiStateFlow = loginViewModel.uiState,
+                onEmailChanged = { fieldValue ->
+                    loginViewModel.onEmailUpdated(fieldValue)
+                },
+                onPasswordChanged = { fieldValue ->
+                    loginViewModel.onEmailUpdated(fieldValue)
+                },
+                onForgotPasswordClicked = {
+                    loginViewModel.onForgotPasswordClicked()
+                },
+                onLoginClicked = {
+                    loginViewModel.login()
+                }
+            )
+        }
     }
 }

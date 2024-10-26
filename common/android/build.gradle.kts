@@ -62,6 +62,7 @@ dependencies {
     implementation(libs.compose.foundation)
     implementation(libs.androidx.compose.runtime)
     implementation(libs.coil.compose)
+    implementation(libs.compose.animation)
 
     implementation(libs.glide)
     implementation(libs.androidx.appcompat)

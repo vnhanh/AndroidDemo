@@ -1,12 +1,14 @@
 package com.vnhanh.demo.authentication.ui
 
 import android.util.Patterns
+import androidx.compose.ui.text.input.TextFieldValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.vnhanh.authentication.domain.LoginUseCase
 import com.vnhanh.authentication.model.UserData
 import com.vnhanh.demo.authentication.domain.IAuthValidator
 import com.vnhanh.demo.authentication.model.AuthUiState
+import com.vnhanh.demo.authentication.model.LoginUiState
 import com.vnhanh.demo.authentication.model.TextFieldState
 import com.vnhanh.network.model.ApiState
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -24,11 +26,14 @@ class LoginViewModel @Inject constructor(
     private val loginUseCase: LoginUseCase,
     private val authValidator: IAuthValidator,
 ) : ViewModel() {
-    private val _uiState = MutableStateFlow(AuthUiState())
+    private val _uiState = MutableStateFlow(LoginUiState())
     val uiState = _uiState.asStateFlow()
 
-    fun login(email: String, password: String) {
+    fun login() {
         viewModelScope.launch(Dispatchers.IO) {
+            val email = _uiState.value.emailState.value.uiValue.text
+            val password = _uiState.value.passwordState.value.uiState.name
+
             loginUseCase.login(email = email, password = password)
                 .catch { e ->
                     if (e !is CancellationException) {
@@ -38,10 +43,10 @@ class LoginViewModel @Inject constructor(
                 .collect { apiState: ApiState<UserData> ->
                     when(apiState) {
                         is ApiState.Loading -> {
-                            _uiState.value.loginUiState.updateEmailState(
+                            _uiState.value.updateEmailState(
                                 newState = TextFieldState.DISABLED
                             )
-                            _uiState.value.loginUiState.updatePasswordState(
+                            _uiState.value.updatePasswordState(
                                 newState = TextFieldState.DISABLED
                             )
                         }
@@ -70,5 +75,17 @@ class LoginViewModel @Inject constructor(
     // A placeholder password validation check
     private fun isPasswordValid(password: String): Boolean {
         return password.length > 5
+    }
+
+    fun onEmailUpdated(fieldState: TextFieldValue) {
+        // TODO
+    }
+
+    fun onPasswordUpdated(fieldState: TextFieldValue) {
+        // TODO
+    }
+
+    fun onForgotPasswordClicked() {
+        // TODO
     }
 }
