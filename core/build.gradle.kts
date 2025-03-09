@@ -4,16 +4,15 @@ plugins {
     alias(libs.plugins.kotlin.kapt)
     alias(libs.plugins.compose.compiler)
     alias(libs.plugins.hilt)
-    alias(libs.plugins.dagger.hilt)
     alias(libs.plugins.kotlin.parcelize)
 }
 
 android {
     namespace = "com.vnhanh.core"
-    compileSdk = AppBuild.COMPILE_SDK
+    compileSdk = 35
 
     defaultConfig {
-        minSdk = AppBuild.MIN_SDK
+        minSdk = 28
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")
@@ -56,7 +55,6 @@ dependencies {
     // Hilt
     implementation(libs.hilt.android)
     implementation(libs.androidx.material3.android)
-    implementation(libs.androidx.foundation.android)
     kapt(libs.hilt.android.compiler)
     implementation(libs.hilt.navigation.fragment)
     implementation(libs.hilt.navigation.compose)

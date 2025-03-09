@@ -8,13 +8,13 @@ import androidx.annotation.RequiresPermission
 import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
 
-interface INetWorkChecker {
+interface NetWorkChecker {
     fun isOnline() : Boolean
 }
 
-class NetWorkChecker @Inject constructor(
+class NetWorkCheckerImpl @Inject constructor(
     @ApplicationContext private val context: Context,
-) : INetWorkChecker {
+) : NetWorkChecker {
 
     @RequiresPermission(value = "android.permission.ACCESS_NETWORK_STATE")
     override fun isOnline(): Boolean {

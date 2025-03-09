@@ -7,10 +7,10 @@ plugins {
 
 android {
     namespace = "com.vnhanh.common"
-    compileSdk = AppBuild.COMPILE_SDK
+    compileSdk = 35
 
     defaultConfig {
-        minSdk = AppBuild.MIN_SDK
+        minSdk = 28
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")
@@ -48,6 +48,7 @@ android {
 
 dependencies {
     implementation(project(":common:dataHelper"))
+    implementation(project(":core"))
     api(libs.androidx.core.ktx)
     api(libs.androidx.appcompat)
     api(libs.material)

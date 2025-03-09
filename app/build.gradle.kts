@@ -7,12 +7,11 @@ plugins {
 
 android {
     namespace = "com.vnhanh.androiddemo"
-    compileSdk = AppBuild.COMPILE_SDK
+    compileSdk = 35
 
     defaultConfig {
         applicationId = "com.vnhanh.androiddemo"
-        minSdk = AppBuild.MIN_SDK
-        targetSdk = AppBuild.TARGET_SDK
+        minSdk = 28
         versionCode = 1
         versionName = "1.0"
 
@@ -113,8 +112,8 @@ dependencies {
 
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
-    androidTestImplementation(libs.androidx.ui.test.junit4)
+//    androidTestImplementation(libs.androidx.ui.test.junit4)
 
     debugImplementation(libs.androidx.ui.tooling)
-    debugImplementation(libs.androidx.ui.test.manifest)
+//    debugImplementation(libs.androidx.ui.test.manifest)
 }

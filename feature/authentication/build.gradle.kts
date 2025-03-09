@@ -6,15 +6,14 @@ plugins {
     alias(libs.plugins.kotlin.serialization)
     alias(libs.plugins.hilt)
     alias(libs.plugins.compose.compiler)
-    alias(libs.plugins.dagger.hilt)
 }
 
 android {
     namespace = "com.vnhanh.demo.authentication"
-    compileSdk = AppBuild.COMPILE_SDK
+    compileSdk = 35
 
     defaultConfig {
-        minSdk = AppBuild.MIN_SDK
+        minSdk = 28
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")

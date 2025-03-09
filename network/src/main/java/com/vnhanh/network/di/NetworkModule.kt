@@ -1,8 +1,8 @@
 package com.vnhanh.network.di
 
 import android.content.Context
-import com.vnhanh.network.util.INetWorkChecker
 import com.vnhanh.network.util.NetWorkChecker
+import com.vnhanh.network.util.NetWorkCheckerImpl
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -17,7 +17,7 @@ object NetworkModule {
     @Singleton
     fun provideNetworkChecker(
         @ApplicationContext context: Context
-    ) : INetWorkChecker =
-        NetWorkChecker(context = context)
+    ) : NetWorkChecker =
+        NetWorkCheckerImpl(context = context)
 
 }
